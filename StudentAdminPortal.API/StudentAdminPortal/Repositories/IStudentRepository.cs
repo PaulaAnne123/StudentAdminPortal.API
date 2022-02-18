@@ -1,12 +1,13 @@
 ﻿
 using StudentAdminPortal.DataModels;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace StudentAdminPortal.Repositories
 {
     public interface IStudentRepository
     {
-        List<Student> GetStudents(); 
+        Task<List<Student>> GetStudentsAsync(); 
 
     }
 }

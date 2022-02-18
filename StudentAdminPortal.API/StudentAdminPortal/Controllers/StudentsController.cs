@@ -2,6 +2,8 @@
 using StudentAdminPortal.Repositories;
 using StudentAdminPortal.DomainModels;
 using System.Collections.Generic;
+using AutoMapper;
+using System.Threading.Tasks;
 
 namespace StudentAdminPortal.Controllers
 {
@@ -9,36 +11,21 @@ namespace StudentAdminPortal.Controllers
     public class StudentsController : Controller
     {
         private readonly IStudentRepository studentRepository;
+        private readonly IMapper mapper;
 
-        public StudentsController(IStudentRepository studentRepository)
+        public StudentsController(IStudentRepository studentRepository, IMapper mapper)
         {
             this.studentRepository = studentRepository;
+            this.mapper = mapper;
         }
 
         [HttpGet]
         [Route("[controller]")]
-        public IActionResult GetAllStudents()
+        public async Task<IActionResult> GetAllStudentsAsync()
         {
-            var students = studentRepository.GetStudents();
+            var students = await studentRepository.GetStudentsAsync();
 
-            var domainModelStudents = new List<Student>();
-
-            foreach (var student in students)
-            {
-                domainModelStudents.Add(new Student()
-                {
-                    Id = student.Id,
-                    FirstName = student.FirstName,
-                    LastName = student.LastName,
-                    DateOfBirth = student.DateOfBirth,
-                    Email = student.Email,
-                    Mobile = student.Mobile,
-                    ProfileImageUrl = student.ProfileImageUrl,
-                    GenderId = student.GenderId
-                });
-            }
-
-            return Ok(domainModelStudents);
+            return Ok(mapper.Map<List<Student>>(students));
         }
     }
 }
