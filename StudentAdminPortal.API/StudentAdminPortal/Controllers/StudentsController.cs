@@ -4,6 +4,7 @@ using StudentAdminPortal.DomainModels;
 using System.Collections.Generic;
 using AutoMapper;
 using System.Threading.Tasks;
+using System;
 
 namespace StudentAdminPortal.Controllers
 {
@@ -26,6 +27,24 @@ namespace StudentAdminPortal.Controllers
             var students = await studentRepository.GetStudentsAsync();
 
             return Ok(mapper.Map<List<Student>>(students));
+        }
+
+        [HttpGet]
+        [Route("[controller]/{studentId:guid}")]
+        public async Task<IActionResult> GetStudentAsync([FromRoute] Guid studentId)
+        {
+            // Fetch single student detail
+
+            var student = await studentRepository.GetStudentAsync(studentId);
+
+            // Return Student
+            if (student == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(mapper.Map<Student>(student));
+
         }
     }
 }
