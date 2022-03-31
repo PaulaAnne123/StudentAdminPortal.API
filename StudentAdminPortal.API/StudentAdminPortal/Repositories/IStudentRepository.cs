@@ -12,5 +12,6 @@ namespace StudentAdminPortal.Repositories
 
         Task<Student> GetStudentAsync(Guid studentId);
 
+        Task<List<Gender>> GetGendersAsync();
     }
 }

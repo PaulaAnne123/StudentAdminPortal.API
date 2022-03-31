@@ -25,5 +25,9 @@ namespace StudentAdminPortal.Repositories
                 Include(nameof(Address)).FirstOrDefaultAsync(x => x.Id == studentId);
         }
 
+        public async Task<List<Gender>> GetGendersAsync()
+        {
+            return await context.Gender.ToListAsync();
+        }
     }
 }
