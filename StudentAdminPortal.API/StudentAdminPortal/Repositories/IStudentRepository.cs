@@ -13,5 +13,9 @@ namespace StudentAdminPortal.Repositories
         Task<Student> GetStudentAsync(Guid studentId);
 
         Task<List<Gender>> GetGendersAsync();
+
+        Task<bool> Exists(Guid studentId);
+
+        Task<Student> UpdateStudent(Guid studentId, Student request);
     }
 }
