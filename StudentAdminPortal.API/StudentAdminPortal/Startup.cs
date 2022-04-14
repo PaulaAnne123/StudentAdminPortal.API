@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentValidation.AspNetCore;
 
 namespace StudentAdminPortal
 {
@@ -43,6 +44,8 @@ namespace StudentAdminPortal
             });
 
             services.AddControllers();
+            services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
+
             services.AddDbContext<StudentAdminContext>(options => options.UseSqlServer(Configuration.GetConnectionString("StudentAdminPortalDb")));
             services.AddScoped<IStudentRepository, SqlStudentRepository>();
             services.AddScoped<IImageRepository, LocalStorageImageRepository>();
